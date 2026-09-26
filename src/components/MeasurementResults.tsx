@@ -32,12 +32,12 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
         label: 'Measurement Probability (%)',
         data: probabilities,
         backgroundColor: topStates.map((_, idx) =>
-          idx === 0 ? 'rgba(0, 242, 254, 0.85)' : 'rgba(56, 189, 248, 0.35)'
+          idx === 0 ? '#ff6b7d' : 'rgba(245, 235, 224, 0.45)'
         ),
         borderColor: topStates.map((_, idx) =>
-          idx === 0 ? '#00f2fe' : 'rgba(56, 189, 248, 0.6)'
+          idx === 0 ? '#ffffff' : 'rgba(255, 255, 255, 0.7)'
         ),
-        borderWidth: 1,
+        borderWidth: 1.5,
         borderRadius: 6
       }
     ]
@@ -49,28 +49,28 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.9)',
-        borderColor: 'rgba(56, 189, 248, 0.4)',
-        borderWidth: 1,
-        titleColor: '#00f2fe',
-        bodyColor: '#f8fafc',
-        titleFont: { family: 'JetBrains Mono' },
+        backgroundColor: '#3d0515',
+        borderColor: '#ff6b7d',
+        borderWidth: 1.5,
+        titleColor: '#ffffff',
+        bodyColor: '#f5ebe0',
+        titleFont: { family: 'JetBrains Mono', weight: 'bold' as const },
         bodyFont: { family: 'JetBrains Mono' }
       }
     },
     scales: {
       x: {
         grid: { display: false },
-        ticks: { color: '#00f2fe', font: { family: 'JetBrains Mono', size: 11, weight: 'bold' as const } }
+        ticks: { color: '#ffffff', font: { family: 'JetBrains Mono', size: 12, weight: 'bold' as const } }
       },
       y: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } },
+        grid: { color: 'rgba(245, 235, 224, 0.15)' },
+        ticks: { color: '#f5ebe0', font: { family: 'JetBrains Mono', size: 11, weight: 'bold' as const } },
         title: {
           display: true,
           text: 'Sampling Probability P(x) %',
-          color: '#94a3b8',
-          font: { family: 'JetBrains Mono', size: 11 }
+          color: '#ffffff',
+          font: { family: 'JetBrains Mono', size: 12, weight: 'bold' as const }
         }
       }
     }
@@ -79,45 +79,45 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
   const mostProbable = result.mostProbableBitstring;
 
   return (
-    <section id="measurement" className="py-12 border-t border-slate-900">
+    <section id="measurement" className="py-12 border-t border-[#d45266]/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
-        {/* Section Header */}
+        {/* Section Header - High Contrast Dark Wine on Almond Cream */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 09 — Quantum Measurement</div>
-          <h2 className="text-3xl font-extrabold text-white">Measurement Probability Distribution</h2>
-          <p className="text-slate-300 max-w-3xl leading-relaxed text-sm">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">Measurement Probability Distribution</h2>
+          <p className="text-[#5C0820] font-medium max-w-3xl leading-relaxed text-sm">
             Sampling quantum state measurements yields the computational basis bitstring distribution.
           </p>
         </div>
 
         {/* Highlight Card: Most Probable Bitstring */}
-        <div className="glass-card p-6 border border-cyan-400 bg-cyan-950/20 space-y-4 shadow-xl shadow-cyan-950/50">
+        <div className="glass-card p-6 border-2 border-[#ff6b7d] bg-[#5c0820] space-y-4 shadow-2xl">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">
-                <CheckCircle2 className="w-6 h-6 text-cyan-400" />
+              <div className="p-3 rounded-xl bg-[#7c0b2b] text-[#ffffff] border border-[#ff6b7d]">
+                <CheckCircle2 className="w-6 h-6 text-[#ff6b7d]" />
               </div>
               <div>
-                <span className="text-xs font-mono text-cyan-400 uppercase tracking-widest block">
-                  Most Probable QAOA Quantum Solution
+                <span className="text-xs font-mono text-[#ffd166] uppercase tracking-widest block font-bold">
+                  MOST PROBABLE QAOA QUANTUM SOLUTION
                 </span>
-                <div className="font-mono font-extrabold text-2xl text-white tracking-widest text-glow">
+                <div className="font-mono font-extrabold text-3xl text-[#ffffff] tracking-widest text-glow">
                   {mostProbable.bitstring}
                 </div>
               </div>
             </div>
 
             <div className="flex items-center gap-4 text-xs font-mono">
-              <div className="px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-center">
-                <span className="text-slate-400 block text-[10px]">Probability</span>
-                <span className="text-cyan-300 font-bold text-sm">
+              <div className="px-4 py-2 rounded-xl bg-[#3d0515] border border-[#ff6b7d]/50 text-center">
+                <span className="text-[#f5ebe0] block text-[10px] font-bold">Probability</span>
+                <span className="text-[#ffd166] font-extrabold text-base">
                   {(mostProbable.probability * 100).toFixed(1)}%
                 </span>
               </div>
-              <div className="px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-center">
-                <span className="text-slate-400 block text-[10px]">Sample Shots</span>
-                <span className="text-white font-bold text-sm">
+              <div className="px-4 py-2 rounded-xl bg-[#3d0515] border border-[#ff6b7d]/50 text-center">
+                <span className="text-[#f5ebe0] block text-[10px] font-bold">Sample Shots</span>
+                <span className="text-[#ffffff] font-extrabold text-base">
                   {mostProbable.shots} / 1000
                 </span>
               </div>
@@ -125,9 +125,9 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
           </div>
 
           {/* Bitstring Asset Decoder */}
-          <div className="pt-2 border-t border-cyan-500/20">
-            <p className="text-xs text-slate-300 mb-3">
-              The measured bitstring maps binary bits directly to asset selection (<span className="font-mono text-cyan-300 font-bold">1</span> = Selected, <span className="font-mono text-slate-500">0</span> = Unselected):
+          <div className="pt-3 border-t border-[#ff6b7d]/30">
+            <p className="text-xs text-[#ffffff] font-medium mb-3">
+              The measured bitstring maps binary bits directly to asset selection (<span className="font-mono text-[#ffd166] font-bold">1</span> = Selected, <span className="font-mono text-[#f5ebe0] font-bold">0</span> = Unselected):
             </p>
             
             <div className="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 gap-2 font-mono text-xs">
@@ -137,16 +137,18 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
                 return (
                   <div
                     key={idx}
-                    className={`p-2.5 rounded-lg border text-center transition-all ${
+                    className={`p-3 rounded-xl border text-center transition-all ${
                       isSelected
-                        ? 'bg-cyan-500/20 border-cyan-400 text-cyan-200 font-bold shadow-md'
-                        : 'bg-slate-950 border-slate-800 text-slate-600'
+                        ? 'bg-[#7c0b2b] border-[#ff6b7d] text-[#ffffff] font-bold shadow-lg ring-2 ring-[#ff6b7d]/40'
+                        : 'bg-[#3d0515] border-[#7c0b2b] text-[#f5ebe0] font-semibold'
                     }`}
                   >
-                    <div className="text-[10px] opacity-75">{asset?.symbol}</div>
-                    <div className="text-base font-extrabold mt-0.5">{bit}</div>
-                    <div className="text-[9px] uppercase mt-0.5">
-                      {isSelected ? '✓ Selected' : 'Excluded'}
+                    <div className={`text-[11px] font-bold ${isSelected ? 'text-[#ffd166]' : 'text-[#f5ebe0]'}`}>
+                      {asset?.symbol}
+                    </div>
+                    <div className="text-lg font-extrabold mt-0.5 text-[#ffffff]">{bit}</div>
+                    <div className={`text-[10px] uppercase font-bold mt-1 ${isSelected ? 'text-[#ff6b7d]' : 'text-[#e6d0c0]'}`}>
+                      {isSelected ? '✓ SELECTED' : 'EXCLUDED'}
                     </div>
                   </div>
                 );
@@ -156,13 +158,13 @@ export const MeasurementResults: React.FC<MeasurementResultsProps> = ({ result, 
         </div>
 
         {/* Probability Histogram Chart */}
-        <div className="glass-card p-6 border border-cyan-500/20">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-xs font-mono text-slate-400">
-            <span className="flex items-center gap-2 text-cyan-400 font-bold">
-              <BarChart className="w-4 h-4" />
+        <div className="glass-card p-6 border-2 border-[#ff6b7d]/40 bg-[#5c0820]">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#7c0b2b] text-xs font-mono">
+            <span className="flex items-center gap-2 text-[#ffffff] font-extrabold text-sm">
+              <BarChart className="w-4 h-4 text-[#ff6b7d]" />
               Top 8 Measured Computational Basis Bitstrings
             </span>
-            <span>1000 Total Shots</span>
+            <span className="text-[#f5ebe0] font-bold">1000 Total Shots</span>
           </div>
 
           <div className="h-72 w-full">
