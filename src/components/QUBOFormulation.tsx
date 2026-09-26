@@ -35,8 +35,8 @@ export const QUBOFormulation: React.FC<QUBOFormulationProps> = ({
         {/* Section Header */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 05 — Mathematical Formulation</div>
-          <h2 className="text-3xl font-extrabold text-white">QUBO Formulation</h2>
-          <p className="text-slate-300 max-w-3xl leading-relaxed text-sm">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">QUBO Formulation</h2>
+          <p className="text-[#5C0820] max-w-3xl leading-relaxed text-sm">
             Quadratic Unconstrained Binary Optimization (QUBO) converts constrained portfolio selection into a binary energy minimization objective suitable for quantum processing.
           </p>
         </div>

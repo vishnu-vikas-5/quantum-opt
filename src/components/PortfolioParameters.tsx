@@ -19,8 +19,8 @@ export const PortfolioParameters: React.FC<PortfolioParametersProps> = ({
         {/* Section Header */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 04 — Optimization Control</div>
-          <h2 className="text-3xl font-extrabold text-white">Portfolio Optimization Parameters</h2>
-          <p className="text-slate-300 max-w-2xl leading-relaxed text-sm">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">Portfolio Optimization Parameters</h2>
+          <p className="text-[#5C0820] max-w-2xl leading-relaxed text-sm">
             Tune the objective weights and QAOA quantum circuit parameters before QUBO formulation.
           </p>
         </div>

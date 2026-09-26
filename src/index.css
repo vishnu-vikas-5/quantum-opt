@@ -1,25 +1,25 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
-/* Crimson Burgundy & Almond Cream Luxury Quantum Theme */
+/* Almond Cream & Deep Burgundy Luxury Theme */
 :root {
-  --bg-main: #140307;
-  --bg-surface: #24050e;
-  --bg-card: rgba(54, 7, 21, 0.75);
-  --bg-card-hover: rgba(82, 11, 32, 0.88);
+  --bg-main: #f5ebe0;          /* Almond Cream Background */
+  --bg-surface: #4a0619;       /* Deep Burgundy Surface */
+  --bg-card: #5c0820;          /* Rich Burgundy Cards */
+  --bg-card-hover: #700a27;
   
-  --border-subtle: rgba(212, 82, 102, 0.25);
-  --border-glow: rgba(244, 234, 218, 0.45);
+  --border-subtle: rgba(124, 11, 43, 0.25);
+  --border-glow: rgba(212, 82, 102, 0.6);
   --border-active: #d45266;
 
   --accent-rose: #d45266;      /* Coral Rose from Palette */
   --accent-burgundy: #7c0b2b;  /* Deep Burgundy from Palette */
-  --accent-cream: #f4eada;     /* Almond Cream from Palette */
+  --accent-cream: #f5ebe0;     /* Almond Cream from Palette */
   --accent-pearl: #fffdf7;     /* Warm Pearl from Palette */
 
   --text-main: #fffdf7;
   --text-muted: #f4eada;
-  --text-subtle: #cdaea0;
+  --text-dark: #3d0515;
 
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
@@ -33,50 +33,49 @@ html {
   scroll-behavior: smooth;
   font-family: var(--font-sans);
   background-color: var(--bg-main);
-  color: var(--text-main);
+  color: var(--text-dark);
   -webkit-font-smoothing: antialiased;
 }
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, rgba(212, 82, 102, 0.18) 0%, transparent 60%),
-              radial-gradient(circle at 100% 50%, rgba(124, 11, 43, 0.25) 0%, transparent 50%),
-              var(--bg-main);
+  background-color: #f5ebe0;
+  background-image: radial-gradient(circle at 50% 0%, rgba(212, 82, 102, 0.15) 0%, transparent 60%),
+                    radial-gradient(circle at 100% 50%, rgba(124, 11, 43, 0.12) 0%, transparent 50%);
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
-/* Custom Crimson Scrollbar */
+/* Custom Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #140307;
+  background: #f5ebe0;
 }
 ::-webkit-scrollbar-thumb {
-  background: #3d0817;
+  background: #7c0b2b;
   border-radius: 4px;
-  border: 1px solid rgba(212, 82, 102, 0.3);
+  border: 1px solid rgba(245, 235, 224, 0.4);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #5c0d23;
+  background: #d45266;
 }
 
 /* Glassmorphism Card Utility */
 .glass-card {
-  background: var(--bg-card);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  background: #5c0820;
+  border: 1px solid rgba(212, 82, 102, 0.35);
+  border-radius: 14px;
+  color: #fffdf7;
   transition: all 0.25s ease-in-out;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55);
+  box-shadow: 0 10px 30px 0 rgba(74, 6, 25, 0.25);
 }
 
 .glass-card:hover {
-  border-color: var(--border-glow);
-  box-shadow: 0 12px 40px 0 rgba(212, 82, 102, 0.15);
+  border-color: #d45266;
+  box-shadow: 0 14px 40px 0 rgba(212, 82, 102, 0.25);
 }
 
 .glass-card-interactive {
@@ -97,8 +96,8 @@ body {
   -webkit-text-fill-color: transparent;
 }
 
-.gradient-burgundy-text {
-  background: linear-gradient(135deg, #f4eada 0%, #d45266 50%, #7c0b2b 100%);
+.gradient-dark-text {
+  background: linear-gradient(135deg, #3d0515 0%, #7c0b2b 60%, #d45266 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -147,12 +146,12 @@ body {
   font-weight: 700;
   font-size: 0.85rem;
   border: 1px solid rgba(244, 234, 218, 0.3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
 }
 .gate-h { background: rgba(244, 234, 218, 0.2); color: #f4eada; border-color: #f4eada; }
-.gate-rz { background: rgba(212, 82, 102, 0.25); color: #f28b97; border-color: #d45266; }
-.gate-rx { background: rgba(124, 11, 43, 0.4); color: #f4eada; border-color: #7c0b2b; }
-.gate-cnot { background: rgba(255, 253, 247, 0.2); color: #fffdf7; border-color: #fffdf7; }
+.gate-rz { background: rgba(212, 82, 102, 0.3); color: #fffdf7; border-color: #d45266; }
+.gate-rx { background: rgba(124, 11, 43, 0.6); color: #f4eada; border-color: #7c0b2b; }
+.gate-cnot { background: rgba(255, 253, 247, 0.25); color: #fffdf7; border-color: #fffdf7; }
 
 /* Custom Badge */
 .badge-quantum {
@@ -165,9 +164,9 @@ body {
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(212, 82, 102, 0.18);
+  background: #7c0b2b;
   color: #f4eada;
-  border: 1px solid rgba(212, 82, 102, 0.4);
+  border: 1px solid #d45266;
 }
 
 .badge-academic {
@@ -179,7 +178,7 @@ body {
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  background: rgba(244, 234, 218, 0.12);
+  background: rgba(244, 234, 218, 0.2);
   color: #f4eada;
-  border: 1px solid rgba(244, 234, 218, 0.25);
+  border: 1px solid rgba(244, 234, 218, 0.3);
 }

@@ -49,8 +49,8 @@ export const QAOAExperiment: React.FC<QAOAExperimentProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="badge-quantum">Section 07 — Variational Quantum Circuit</div>
-            <h2 className="text-3xl font-extrabold text-white">QAOA Experiment Execution</h2>
-            <p className="text-slate-300 max-w-2xl leading-relaxed text-sm">
+            <h2 className="text-3xl font-extrabold text-[#3D0515]">QAOA Experiment Execution</h2>
+            <p className="text-[#5C0820] max-w-2xl leading-relaxed text-sm">
               Execute parameterized quantum circuit layers <MathFormula math="|\gamma, \beta\rangle = \prod_{k=1}^p U(H_B, \beta_k) U(H_C, \gamma_k) |+\rangle^{\otimes N}" /> to find ground state.
             </p>
           </div>

@@ -24,22 +24,22 @@ export const Hero: React.FC<HeroProps> = ({ onRunSimulation, onExploreMethodolog
 
         {/* Hero Title & Subtitle */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-[#fffdf7] tracking-tight leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-[#3D0515] tracking-tight leading-tight">
             Maximize Returns.{' '}
-            <span className="gradient-text text-glow">Minimize Risk.</span>
+            <span className="gradient-dark-text text-glow">Minimize Risk.</span>
           </h1>
           
-          <h2 className="text-xl sm:text-2xl font-medium text-[#f4eada] font-mono tracking-wide">
+          <h2 className="text-xl sm:text-2xl font-bold text-[#7C0B2B] font-mono tracking-wide">
             Portfolio Optimization Using QAOA
           </h2>
 
-          <p className="text-base sm:text-lg text-[#cdaea0] max-w-3xl mx-auto leading-relaxed pt-2">
+          <p className="text-base sm:text-lg text-[#5C0820] max-w-3xl mx-auto leading-relaxed pt-2">
             An experimental quantum optimization platform that formulates portfolio selection as a{' '}
-            <span className="text-[#f4eada] font-semibold underline decoration-[#d45266] underline-offset-4">
+            <span className="text-[#7C0B2B] font-semibold underline decoration-[#D45266] underline-offset-4">
               QUBO problem
             </span>{' '}
             and solves it using the{' '}
-            <span className="text-[#f4eada] font-semibold underline decoration-[#d45266] underline-offset-4">
+            <span className="text-[#7C0B2B] font-semibold underline decoration-[#D45266] underline-offset-4">
               Quantum Approximate Optimization Algorithm
             </span>.
           </p>

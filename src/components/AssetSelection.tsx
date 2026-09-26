@@ -26,8 +26,8 @@ export const AssetSelection: React.FC<AssetSelectionProps> = ({
         <div className="flex flex-wrap items-center justify-between gap-4">
           <div className="space-y-2">
             <div className="badge-quantum">Section 03 — Financial Asset Universe</div>
-            <h2 className="text-3xl font-extrabold text-white">Interactive Asset Selection Panel</h2>
-            <p className="text-slate-300 max-w-2xl leading-relaxed text-sm">
+            <h2 className="text-3xl font-extrabold text-[#3D0515]">Interactive Asset Selection Panel</h2>
+            <p className="text-[#5C0820] max-w-2xl leading-relaxed text-sm">
               Select assets from the research universe to construct the QUBO optimization matrix.
             </p>
           </div>

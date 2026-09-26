@@ -19,8 +19,8 @@ export const ProblemDefinition: React.FC = () => {
         {/* Section Header */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 02 — Mathematical Model</div>
-          <h2 className="text-3xl font-extrabold text-white">The Portfolio Optimization Problem</h2>
-          <p className="text-slate-300 max-w-3xl leading-relaxed">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">The Portfolio Optimization Problem</h2>
+          <p className="text-[#5C0820] max-w-3xl leading-relaxed">
             Given a collection of financial assets, the objective is to select an optimal portfolio that balances expected return and risk.
           </p>
         </div>

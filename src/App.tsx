@@ -159,7 +159,7 @@ export function App() {
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-950 text-slate-100 font-sans selection:bg-cyan-500 selection:text-slate-950">
+    <div className="min-h-screen flex flex-col bg-[#F5EBE0] text-[#3D0515] font-sans selection:bg-[#D45266] selection:text-white">
       
       {/* Sticky Top Navbar */}
       <Navbar onRunSimulation={handleRunQAOA} activeSection={activeSection} />

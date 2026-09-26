@@ -15,8 +15,8 @@ export const IsingModel: React.FC<IsingModelProps> = ({ ising, onProceedToQAOA }
         {/* Section Header */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 06 — Quantum Mapping</div>
-          <h2 className="text-3xl font-extrabold text-white">QUBO → Ising Hamiltonian Transformation</h2>
-          <p className="text-slate-300 max-w-3xl leading-relaxed text-sm">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">QUBO → Ising Hamiltonian Transformation</h2>
+          <p className="text-[#5C0820] max-w-3xl leading-relaxed text-sm">
             Map classical binary decision variables <MathFormula math="x_i \in \{0, 1\}" /> into quantum spin-half operators <MathFormula math="Z_i \in \{+1, -1\}" /> acting on qubit Hilbert space.
           </p>
         </div>
