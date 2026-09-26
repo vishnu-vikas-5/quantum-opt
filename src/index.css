@@ -1,26 +1,25 @@
 @import "tailwindcss";
 @import "katex/dist/katex.min.css";
 
+/* Crimson Burgundy & Almond Cream Luxury Quantum Theme */
 :root {
-  --bg-main: #070a13;
-  --bg-surface: #0f172a;
-  --bg-card: rgba(15, 23, 42, 0.75);
-  --bg-card-hover: rgba(30, 41, 59, 0.85);
+  --bg-main: #140307;
+  --bg-surface: #24050e;
+  --bg-card: rgba(54, 7, 21, 0.75);
+  --bg-card-hover: rgba(82, 11, 32, 0.88);
   
-  --border-subtle: rgba(56, 189, 248, 0.15);
-  --border-glow: rgba(56, 189, 248, 0.35);
-  --border-active: #00f2fe;
+  --border-subtle: rgba(212, 82, 102, 0.25);
+  --border-glow: rgba(244, 234, 218, 0.45);
+  --border-active: #d45266;
 
-  --accent-cyan: #00f2fe;
-  --accent-blue: #38bdf8;
-  --accent-indigo: #6366f1;
-  --accent-emerald: #10b981;
-  --accent-amber: #f59e0b;
-  --accent-purple: #a855f7;
+  --accent-rose: #d45266;      /* Coral Rose from Palette */
+  --accent-burgundy: #7c0b2b;  /* Deep Burgundy from Palette */
+  --accent-cream: #f4eada;     /* Almond Cream from Palette */
+  --accent-pearl: #fffdf7;     /* Warm Pearl from Palette */
 
-  --text-main: #f8fafc;
-  --text-muted: #94a3b8;
-  --text-subtle: #64748b;
+  --text-main: #fffdf7;
+  --text-muted: #f4eada;
+  --text-subtle: #cdaea0;
 
   --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
@@ -40,44 +39,44 @@ html {
 
 body {
   min-height: 100vh;
-  background: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.08) 0%, transparent 50%),
-              radial-gradient(circle at 100% 50%, rgba(99, 102, 241, 0.05) 0%, transparent 40%),
+  background: radial-gradient(circle at 50% 0%, rgba(212, 82, 102, 0.18) 0%, transparent 60%),
+              radial-gradient(circle at 100% 50%, rgba(124, 11, 43, 0.25) 0%, transparent 50%),
               var(--bg-main);
   background-attachment: fixed;
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
+/* Custom Crimson Scrollbar */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #070a13;
+  background: #140307;
 }
 ::-webkit-scrollbar-thumb {
-  background: #1e293b;
+  background: #3d0817;
   border-radius: 4px;
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  border: 1px solid rgba(212, 82, 102, 0.3);
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: #5c0d23;
 }
 
 /* Glassmorphism Card Utility */
 .glass-card {
   background: var(--bg-card);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
   transition: all 0.25s ease-in-out;
-  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.55);
 }
 
 .glass-card:hover {
   border-color: var(--border-glow);
-  box-shadow: 0 12px 40px 0 rgba(0, 242, 254, 0.08);
+  box-shadow: 0 12px 40px 0 rgba(212, 82, 102, 0.15);
 }
 
 .glass-card-interactive {
@@ -89,11 +88,17 @@ body {
 
 /* Glowing text */
 .text-glow {
-  text-shadow: 0 0 20px rgba(0, 242, 254, 0.4);
+  text-shadow: 0 0 20px rgba(212, 82, 102, 0.5);
 }
 
 .gradient-text {
-  background: linear-gradient(135deg, #00f2fe 0%, #38bdf8 50%, #6366f1 100%);
+  background: linear-gradient(135deg, #fffdf7 0%, #f4eada 40%, #d45266 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-burgundy-text {
+  background: linear-gradient(135deg, #f4eada 0%, #d45266 50%, #7c0b2b 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -101,7 +106,7 @@ body {
 /* Pulsing Quantum Particle Glow */
 @keyframes particlePulse {
   0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 12px #00f2fe); }
+  50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 12px #d45266); }
 }
 
 .animate-particle {
@@ -127,8 +132,8 @@ body {
 .heatmap-cell:hover {
   transform: scale(1.08);
   z-index: 10;
-  filter: brightness(1.2);
-  box-shadow: 0 0 12px rgba(0, 242, 254, 0.5);
+  filter: brightness(1.25);
+  box-shadow: 0 0 14px rgba(212, 82, 102, 0.6);
 }
 
 /* Circuit Gate Visuals */
@@ -141,40 +146,40 @@ body {
   font-family: var(--font-mono);
   font-weight: 700;
   font-size: 0.85rem;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(244, 234, 218, 0.3);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
 }
-.gate-h { background: rgba(56, 189, 248, 0.2); color: #38bdf8; border-color: #38bdf8; }
-.gate-rz { background: rgba(99, 102, 241, 0.2); color: #818cf8; border-color: #6366f1; }
-.gate-rx { background: rgba(168, 85, 247, 0.2); color: #c084fc; border-color: #a855f7; }
-.gate-cnot { background: rgba(16, 185, 129, 0.2); color: #34d399; border-color: #10b981; }
+.gate-h { background: rgba(244, 234, 218, 0.2); color: #f4eada; border-color: #f4eada; }
+.gate-rz { background: rgba(212, 82, 102, 0.25); color: #f28b97; border-color: #d45266; }
+.gate-rx { background: rgba(124, 11, 43, 0.4); color: #f4eada; border-color: #7c0b2b; }
+.gate-cnot { background: rgba(255, 253, 247, 0.2); color: #fffdf7; border-color: #fffdf7; }
 
 /* Custom Badge */
 .badge-quantum {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(0, 242, 254, 0.1);
-  color: var(--accent-cyan);
-  border: 1px solid rgba(0, 242, 254, 0.3);
+  background: rgba(212, 82, 102, 0.18);
+  color: #f4eada;
+  border: 1px solid rgba(212, 82, 102, 0.4);
 }
 
 .badge-academic {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 4px 12px;
   border-radius: 9999px;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.05em;
-  background: rgba(148, 163, 184, 0.1);
-  color: #cbd5e1;
-  border: 1px solid rgba(148, 163, 184, 0.2);
+  background: rgba(244, 234, 218, 0.12);
+  color: #f4eada;
+  border: 1px solid rgba(244, 234, 218, 0.25);
 }
