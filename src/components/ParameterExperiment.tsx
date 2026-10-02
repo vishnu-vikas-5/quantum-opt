@@ -41,22 +41,22 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
       {
         label: 'Expected Return Rₚ (%)',
         data: tradeoffCurve.map(t => t.returnVal),
-        borderColor: '#10b981',
-        backgroundColor: '#10b981',
+        borderColor: '#ff6b7d',
+        backgroundColor: '#ff6b7d',
         yAxisID: 'y'
       },
       {
         label: 'Portfolio Risk σₚ (%)',
         data: tradeoffCurve.map(t => t.riskVal),
-        borderColor: '#f59e0b',
-        backgroundColor: '#f59e0b',
+        borderColor: '#f4eada',
+        backgroundColor: '#f4eada',
         yAxisID: 'y'
       },
       {
         label: 'Sharpe Ratio',
         data: tradeoffCurve.map(t => t.sharpe),
-        borderColor: '#00f2fe',
-        backgroundColor: '#00f2fe',
+        borderColor: '#d45266',
+        backgroundColor: '#d45266',
         borderDash: [5, 5],
         yAxisID: 'y1'
       }
@@ -68,58 +68,58 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        labels: { color: '#cbd5e1', font: { family: 'JetBrains Mono', size: 11 } }
+        labels: { color: '#f4eada', font: { family: 'JetBrains Mono', size: 11 } }
       },
       tooltip: {
-        backgroundColor: 'rgba(15, 23, 42, 0.95)',
-        borderColor: 'rgba(56, 189, 248, 0.4)',
+        backgroundColor: 'rgba(36, 5, 14, 0.95)',
+        borderColor: 'rgba(212, 82, 102, 0.4)',
         borderWidth: 1,
-        titleColor: '#00f2fe',
-        bodyColor: '#f8fafc',
+        titleColor: '#ff6b7d',
+        bodyColor: '#fffdf7',
         titleFont: { family: 'JetBrains Mono' },
         bodyFont: { family: 'JetBrains Mono' }
       }
     },
     scales: {
       x: {
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#64748b', font: { family: 'JetBrains Mono', size: 10 } }
+        grid: { color: 'rgba(212, 82, 102, 0.15)' },
+        ticks: { color: '#f4eada', font: { family: 'JetBrains Mono', size: 10 } }
       },
       y: {
         type: 'linear' as const,
         display: true,
         position: 'left' as const,
-        grid: { color: 'rgba(255, 255, 255, 0.05)' },
-        ticks: { color: '#10b981', font: { family: 'JetBrains Mono', size: 10 } },
-        title: { display: true, text: 'Return / Risk (%)', color: '#94a3b8', font: { family: 'JetBrains Mono' } }
+        grid: { color: 'rgba(212, 82, 102, 0.15)' },
+        ticks: { color: '#ff6b7d', font: { family: 'JetBrains Mono', size: 10 } },
+        title: { display: true, text: 'Return / Risk (%)', color: '#f4eada', font: { family: 'JetBrains Mono' } }
       },
       y1: {
         type: 'linear' as const,
         display: true,
         position: 'right' as const,
         grid: { drawOnChartArea: false },
-        ticks: { color: '#00f2fe', font: { family: 'JetBrains Mono', size: 10 } },
-        title: { display: true, text: 'Sharpe Ratio', color: '#00f2fe', font: { family: 'JetBrains Mono' } }
+        ticks: { color: '#f4eada', font: { family: 'JetBrains Mono', size: 10 } },
+        title: { display: true, text: 'Sharpe Ratio', color: '#f4eada', font: { family: 'JetBrains Mono' } }
       }
     }
   };
 
   return (
-    <section id="experiment" className="py-12 border-t border-slate-900">
+    <section id="experiment" className="py-12 border-t border-[#d45266]/30">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
         
         {/* Section Header */}
         <div className="space-y-2">
           <div className="badge-quantum">Section 14 — Interactive Laboratory</div>
-          <h2 className="text-3xl font-extrabold text-white">Parameter Experimentation Workbench</h2>
-          <p className="text-slate-300 max-w-3xl leading-relaxed text-sm">
+          <h2 className="text-3xl font-extrabold text-[#3D0515]">Parameter Experimentation Workbench</h2>
+          <p className="text-[#5C0820] max-w-3xl leading-relaxed text-sm font-medium">
             Experiment with objective weights <MathFormula math="\lambda" />, portfolio cardinality <MathFormula math="K" />, and circuit depth <MathFormula math="p" /> to analyze the Risk–Return tradeoff curve.
           </p>
         </div>
 
         {/* Live Controls Grid */}
-        <div className="glass-card p-6 border border-cyan-500/20 space-y-6">
-          <div className="flex items-center gap-2 text-cyan-400 font-bold font-mono text-xs uppercase tracking-wider">
+        <div className="glass-card p-6 border border-[#d45266]/40 bg-[#24050e] space-y-6">
+          <div className="flex items-center gap-2 text-[#ff6b7d] font-bold font-mono text-xs uppercase tracking-wider">
             <FlaskConical className="w-4 h-4" />
             Live Sensitivity Parameter Sliders
           </div>
@@ -127,10 +127,10 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             
             {/* Slider 1: Risk Aversion lambda */}
-            <div className="space-y-2 p-4 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="space-y-2 p-4 rounded-xl bg-[#140307] border border-[#d45266]/30">
               <div className="flex justify-between text-xs font-mono">
-                <span className="text-slate-400">Risk Aversion λ:</span>
-                <span className="text-cyan-300 font-bold">{lambda.toFixed(2)}</span>
+                <span className="text-[#f4eada]/70">Risk Aversion λ:</span>
+                <span className="text-[#ff6b7d] font-bold">{lambda.toFixed(2)}</span>
               </div>
               <input
                 type="range"
@@ -139,15 +139,15 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
                 step="0.05"
                 value={lambda}
                 onChange={(e) => setLambda(parseFloat(e.target.value))}
-                className="w-full accent-cyan-400 cursor-pointer"
+                className="w-full accent-[#ff6b7d] cursor-pointer"
               />
             </div>
 
             {/* Slider 2: Portfolio Size K */}
-            <div className="space-y-2 p-4 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="space-y-2 p-4 rounded-xl bg-[#140307] border border-[#d45266]/30">
               <div className="flex justify-between text-xs font-mono">
-                <span className="text-slate-400">Target Size K:</span>
-                <span className="text-blue-300 font-bold">{kSize} Assets</span>
+                <span className="text-[#f4eada]/70">Target Size K:</span>
+                <span className="text-[#f4eada] font-bold">{kSize} Assets</span>
               </div>
               <input
                 type="range"
@@ -156,20 +156,20 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
                 step="1"
                 value={kSize}
                 onChange={(e) => setKSize(parseInt(e.target.value, 10))}
-                className="w-full accent-blue-400 cursor-pointer"
+                className="w-full accent-[#ff6b7d] cursor-pointer"
               />
             </div>
 
             {/* Selector 3: QAOA Depth p */}
-            <div className="space-y-2 p-4 rounded-xl bg-slate-950 border border-slate-800">
+            <div className="space-y-2 p-4 rounded-xl bg-[#140307] border border-[#d45266]/30">
               <div className="flex justify-between text-xs font-mono">
-                <span className="text-slate-400">QAOA Depth p:</span>
-                <span className="text-emerald-300 font-bold">p = {depthP}</span>
+                <span className="text-[#f4eada]/70">QAOA Depth p:</span>
+                <span className="text-[#ff6b7d] font-bold">p = {depthP}</span>
               </div>
               <select
                 value={depthP}
                 onChange={(e) => setDepthP(parseInt(e.target.value, 10))}
-                className="w-full px-2 py-1 rounded bg-slate-900 text-emerald-300 font-mono text-xs border border-slate-800 outline-none"
+                className="w-full px-2 py-1 rounded bg-[#24050e] text-[#ff6b7d] font-mono text-xs border border-[#d45266]/40 outline-none font-bold"
               >
                 <option value={1}>p = 1 Layer</option>
                 <option value={2}>p = 2 Layers</option>
@@ -180,31 +180,31 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
           </div>
 
           {/* Live Outcome Metrics Card */}
-          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-4 border-t border-slate-800 font-mono text-xs">
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Selected Portfolio</span>
-              <span className="text-white font-bold">
+          <div className="grid grid-cols-1 sm:grid-cols-4 gap-3 pt-4 border-t border-[#d45266]/30 font-mono text-xs">
+            <div className="p-3 rounded-lg bg-[#140307] border border-[#d45266]/30">
+              <span className="text-[#f4eada]/60 block text-[10px]">Selected Portfolio</span>
+              <span className="text-[#fffdf7] font-bold">
                 {currentSolution.selectedAssets.map(a => a.symbol).join(', ')}
               </span>
             </div>
 
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Expected Return</span>
-              <span className="text-emerald-400 font-bold">
+            <div className="p-3 rounded-lg bg-[#140307] border border-[#d45266]/30">
+              <span className="text-[#f4eada]/60 block text-[10px]">Expected Return</span>
+              <span className="text-[#ff6b7d] font-bold">
                 +{(currentSolution.returnVal * 100).toFixed(2)}%
               </span>
             </div>
 
-            <div className="p-3 rounded-lg bg-slate-900 border border-slate-800">
-              <span className="text-slate-400 block text-[10px]">Volatility (Risk)</span>
-              <span className="text-amber-400 font-bold">
+            <div className="p-3 rounded-lg bg-[#140307] border border-[#d45266]/30">
+              <span className="text-[#f4eada]/60 block text-[10px]">Volatility (Risk)</span>
+              <span className="text-[#f4eada] font-bold">
                 {(currentSolution.riskVal * 100).toFixed(2)}%
               </span>
             </div>
 
-            <div className="p-3 rounded-lg bg-cyan-950/60 border border-cyan-500/40">
-              <span className="text-cyan-300 block text-[10px]">Sharpe Ratio</span>
-              <span className="text-cyan-300 font-extrabold text-sm">
+            <div className="p-3 rounded-lg bg-[#7c0b2b]/40 border border-[#d45266]">
+              <span className="text-[#ff6b7d] block text-[10px] font-bold">Sharpe Ratio</span>
+              <span className="text-[#ff6b7d] font-extrabold text-sm">
                 {currentSolution.sharpeRatio.toFixed(2)}
               </span>
             </div>
@@ -212,12 +212,12 @@ export const ParameterExperiment: React.FC<ParameterExperimentProps> = ({ assets
         </div>
 
         {/* Sensitivity Tradeoff Chart */}
-        <div className="glass-card p-6 border border-cyan-500/20">
-          <div className="flex items-center justify-between pb-4 mb-4 border-b border-slate-800 text-xs font-mono text-slate-400">
-            <span className="text-cyan-300 font-bold">
+        <div className="glass-card p-6 border border-[#d45266]/40 bg-[#24050e]">
+          <div className="flex items-center justify-between pb-4 mb-4 border-b border-[#d45266]/30 text-xs font-mono text-[#f4eada]/70">
+            <span className="text-[#ff6b7d] font-bold">
               Risk–Return Tradeoff Sensitivity Curve across λ ∈ [0.0, 1.0]
             </span>
-            <span>Target Size K = {kSize}</span>
+            <span className="text-[#f4eada]">Target Size K = {kSize}</span>
           </div>
 
           <div className="h-72 w-full">

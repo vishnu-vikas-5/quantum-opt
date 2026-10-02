@@ -1,14 +1,13 @@
 import { useState, useEffect, useMemo } from 'react';
 import confetti from 'canvas-confetti';
-import type { QAOAConfig, QAOAResult } from './types/quantum';
-import { DEMO_ASSETS, buildCovarianceMatrix, generateQUBOMatrix, convertQUBOToIsing, runQAOASimulation, generateRiskReturnCandidates } from './utils/quantumEngine';
+import type { Asset, QAOAConfig, QAOAResult } from './types/quantum';
+import { LIVE_MARKET_ASSETS, fetchLiveMarketAssets, buildCovarianceMatrix, generateQUBOMatrix, convertQUBOToIsing, runQAOASimulation, generateRiskReturnCandidates } from './utils/quantumEngine';
 
 // Components
 import { Navbar } from './components/Navbar';
-import { Sidebar } from './components/Sidebar';
 import { Hero } from './components/Hero';
-import { ProblemDefinition } from './components/ProblemDefinition';
 import { AssetSelection } from './components/AssetSelection';
+import { StockDetailsPage } from './components/StockDetailsPage';
 import { PortfolioParameters } from './components/PortfolioParameters';
 import { QUBOFormulation } from './components/QUBOFormulation';
 import { IsingModel as IsingModelComp } from './components/IsingModel';
@@ -19,18 +18,19 @@ import { OptimalPortfolio } from './components/OptimalPortfolio';
 import { RiskReturnLandscape } from './components/RiskReturnLandscape';
 import { SharpeRatioAnalysis } from './components/SharpeRatioAnalysis';
 import { ClassicalVsQAOA } from './components/ClassicalVsQAOA';
-import { ParameterExperiment } from './components/ParameterExperiment';
-import { MethodologyTimeline } from './components/MethodologyTimeline';
-import { QuantumConcepts } from './components/QuantumConcepts';
 import { ResultsDashboard } from './components/ResultsDashboard';
 import { Footer } from './components/Footer';
 
 export function App() {
-  const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(DEMO_ASSETS.map(a => a.id));
+  const [viewPage, setViewPage] = useState<'optimizer' | 'stocks'>('stocks');
+  const [allAssets, setAllAssets] = useState<Asset[]>(LIVE_MARKET_ASSETS);
+  const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(LIVE_MARKET_ASSETS.map(a => a.id));
   const [targetK, setTargetK] = useState<number>(4);
   const [activeSection, setActiveSection] = useState<string>('hero');
   const [isRunning, setIsRunning] = useState<boolean>(false);
+  const [isFetchingLive, setIsFetchingLive] = useState<boolean>(false);
   const [activeStep, setActiveStep] = useState<number>(0);
+  const [matrixTab, setMatrixTab] = useState<'qubo' | 'ising'>('qubo');
 
   const [config, setConfig] = useState<QAOAConfig>({
     riskAversion: 0.50,
@@ -45,13 +45,26 @@ export function App() {
 
   // Filter active asset universe
   const activeAssets = useMemo(() => {
-    return DEMO_ASSETS.filter(a => selectedAssetIds.includes(a.id));
-  }, [selectedAssetIds]);
+    return allAssets.filter(a => selectedAssetIds.includes(a.id));
+  }, [allAssets, selectedAssetIds]);
 
   // Sync targetK with config
   useEffect(() => {
     setConfig(prev => ({ ...prev, portfolioSize: targetK }));
   }, [targetK]);
+
+  // Refresh real-time market price feed from Finnhub (.env)
+  const handleRefreshLiveFeed = async () => {
+    setIsFetchingLive(true);
+    const updated = await fetchLiveMarketAssets();
+    setAllAssets(updated);
+    setIsFetchingLive(false);
+  };
+
+  // Auto-fetch live market data on initial load
+  useEffect(() => {
+    handleRefreshLiveFeed();
+  }, []);
 
   // Compute live QUBO matrix and Ising model
   const covMatrix = useMemo(() => buildCovarianceMatrix(activeAssets), [activeAssets]);
@@ -94,6 +107,7 @@ export function App() {
 
   // Run QAOA Simulation sequence with progress animation
   const handleRunQAOA = () => {
+    setViewPage('optimizer');
     setIsRunning(true);
     setActiveStep(0);
 
@@ -132,14 +146,12 @@ export function App() {
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
 
-  // Track active section on scroll
+  // Track active section on scroll during optimizer mode
   useEffect(() => {
+    if (viewPage !== 'optimizer') return;
+
     const handleScroll = () => {
-      const sectionIds = [
-        'hero', 'problem', 'dataset', 'parameters', 'qubo', 'ising',
-        'qaoa', 'convergence', 'measurement', 'results', 'landscape',
-        'sharpe', 'comparison', 'experiment', 'methodology', 'concepts', 'dashboard'
-      ];
+      const sectionIds = ['hero', 'assets-config', 'qaoa-solver', 'results'];
       const scrollPos = window.scrollY + 200;
       for (const id of sectionIds) {
         const el = document.getElementById(id);
@@ -156,88 +168,155 @@ export function App() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+  }, [viewPage]);
 
   return (
     <div className="min-h-screen flex flex-col bg-[#F5EBE0] text-[#3D0515] font-sans selection:bg-[#D45266] selection:text-white">
       
       {/* Sticky Top Navbar */}
-      <Navbar onRunSimulation={handleRunQAOA} activeSection={activeSection} />
+      <Navbar 
+        viewPage={viewPage}
+        onSelectPage={setViewPage}
+        onRunSimulation={handleRunQAOA} 
+        activeSection={activeSection} 
+      />
 
       <div className="flex-1 flex max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 relative">
         
-        {/* Floating Sidebar Navigation */}
-        <Sidebar activeSection={activeSection} />
+        {viewPage === 'stocks' ? (
+          /* Standalone Stock Market & Price Graphs Page View */
+          <main className="flex-1 py-6">
+            <StockDetailsPage
+              assets={allAssets}
+              onRefreshFeed={handleRefreshLiveFeed}
+              isRefreshing={isFetchingLive}
+            />
+          </main>
+        ) : (
+          /* Standalone Quantum QAOA Optimizer Page View */
+          <main className="flex-1 py-6 space-y-12">
+              
+              {/* Section 1: Hero Overview */}
+              <section id="hero">
+                <Hero
+                  onRunSimulation={handleRunQAOA}
+                  onExploreMethodology={() => scrollTo('assets-config')}
+                />
+              </section>
 
-        {/* Main Content Area */}
-        <main className="flex-1 lg:pl-64 py-6 space-y-12">
-          <Hero
-            onRunSimulation={handleRunQAOA}
-            onExploreMethodology={() => scrollTo('methodology')}
-          />
+              {/* Section 2: Assets & Configuration */}
+              <section id="assets-config" className="space-y-8 pt-6 border-t border-[#d45266]/30">
+                <AssetSelection
+                  assets={allAssets}
+                  selectedAssetIds={selectedAssetIds}
+                  targetK={targetK}
+                  onToggleAsset={handleToggleAsset}
+                  onSelectAll={() => setSelectedAssetIds(allAssets.map(a => a.id))}
+                  onTargetKChange={(k) => setTargetK(k)}
+                  onRefreshLiveFeed={() => handleRefreshLiveFeed()}
+                  isFetchingLive={isFetchingLive}
+                />
 
-          <ProblemDefinition />
+                <PortfolioParameters
+                  config={config}
+                  onConfigChange={handleConfigChange}
+                  onGenerateQUBO={() => scrollTo('qaoa-solver')}
+                />
+              </section>
 
-          <AssetSelection
-            assets={DEMO_ASSETS}
-            selectedAssetIds={selectedAssetIds}
-            targetK={targetK}
-            onToggleAsset={handleToggleAsset}
-            onSelectAll={() => setSelectedAssetIds(DEMO_ASSETS.map(a => a.id))}
-            onTargetKChange={(k) => setTargetK(k)}
-          />
+              {/* Section 3: QAOA Simulator & Quantum Matrices */}
+              <section id="qaoa-solver" className="space-y-8 pt-6 border-t border-[#d45266]/30">
+                <div className="space-y-2">
+                  <div className="badge-quantum">Step 03 — QAOA Quantum Simulator</div>
+                  <h2 className="text-3xl font-extrabold text-[#3D0515]">QAOA Circuit & Matrix Inspector</h2>
+                  <p className="text-[#5C0820] max-w-3xl leading-relaxed text-sm">
+                    Tune circuit angles, inspect problem matrices, and run state vector quantum simulation.
+                  </p>
+                </div>
 
-          <PortfolioParameters
-            config={config}
-            onConfigChange={handleConfigChange}
-            onGenerateQUBO={() => scrollTo('qubo')}
-          />
+                <QAOAExperiment
+                  config={config}
+                  onConfigChange={handleConfigChange}
+                  onRunQAOA={handleRunQAOA}
+                  isRunning={isRunning}
+                  activeStep={activeStep}
+                  qaoaResult={qaoaResult}
+                />
 
-          <QUBOFormulation
-            qubo={quboMatrix}
-            config={config}
-            onConvertToIsing={() => scrollTo('ising')}
-          />
+                <QAOAConvergence result={qaoaResult} />
 
-          <IsingModelComp
-            ising={isingModel}
-            onProceedToQAOA={() => scrollTo('qaoa')}
-          />
+                {/* Matrix & Hamiltonian Inspector Tabs */}
+                <div className="space-y-4 pt-4">
+                  <div className="flex items-center justify-between border-b border-[#d45266]/30 pb-2">
+                    <h3 className="text-lg font-bold text-[#3D0515]">Matrix & Model Inspection</h3>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setMatrixTab('qubo')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-all ${
+                          matrixTab === 'qubo'
+                            ? 'bg-[#d45266] text-white shadow-sm'
+                            : 'bg-[#24050e] text-[#cdaea0] hover:text-[#fffdf7]'
+                        }`}
+                      >
+                        QUBO Matrix
+                      </button>
+                      <button
+                        onClick={() => setMatrixTab('ising')}
+                        className={`px-3 py-1.5 rounded-lg text-xs font-bold font-mono transition-all ${
+                          matrixTab === 'ising'
+                            ? 'bg-[#d45266] text-white shadow-sm'
+                            : 'bg-[#24050e] text-[#cdaea0] hover:text-[#fffdf7]'
+                        }`}
+                      >
+                        Ising Spin Model
+                      </button>
+                    </div>
+                  </div>
 
-          <QAOAExperiment
-            config={config}
-            onConfigChange={handleConfigChange}
-            onRunQAOA={handleRunQAOA}
-            isRunning={isRunning}
-            activeStep={activeStep}
-            qaoaResult={qaoaResult}
-          />
+                  {matrixTab === 'qubo' ? (
+                    <QUBOFormulation
+                      qubo={quboMatrix}
+                      config={config}
+                      onConvertToIsing={() => setMatrixTab('ising')}
+                    />
+                  ) : (
+                    <IsingModelComp
+                      ising={isingModel}
+                      onProceedToQAOA={() => scrollTo('qaoa-solver')}
+                    />
+                  )}
+                </div>
+              </section>
 
-          <QAOAConvergence result={qaoaResult} />
+              {/* Section 4: Results, Risk-Return & Classical Benchmark */}
+              <section id="results" className="space-y-8 pt-6 border-t border-[#d45266]/30">
+                <div className="space-y-2">
+                  <div className="badge-quantum">Step 04 — Solution & Benchmark</div>
+                  <h2 className="text-3xl font-extrabold text-[#3D0515]">Optimization Results & Benchmarks</h2>
+                  <p className="text-[#5C0820] max-w-3xl leading-relaxed text-sm">
+                    Analyze state vector measurement distribution, selected optimal portfolio, and classical vs quantum performance.
+                  </p>
+                </div>
 
-          <MeasurementResults result={qaoaResult} assets={activeAssets} />
+                <MeasurementResults result={qaoaResult} assets={activeAssets} />
 
-          <OptimalPortfolio optimal={qaoaResult?.mostProbableBitstring || null} />
+                <OptimalPortfolio optimal={qaoaResult?.mostProbableBitstring || null} />
 
-          <RiskReturnLandscape candidates={candidatePortfolios} />
+                <RiskReturnLandscape candidates={candidatePortfolios} />
 
-          <SharpeRatioAnalysis optimal={qaoaResult?.mostProbableBitstring || null} />
+                <SharpeRatioAnalysis optimal={qaoaResult?.mostProbableBitstring || null} />
 
-          <ClassicalVsQAOA qaoaResult={qaoaResult} />
+                <ClassicalVsQAOA qaoaResult={qaoaResult} />
 
-          <ParameterExperiment assets={activeAssets} />
-
-          <MethodologyTimeline />
-
-          <QuantumConcepts />
-
-          <ResultsDashboard
-            qaoaResult={qaoaResult}
-            config={config}
-            onRunAgain={handleRunQAOA}
-            onScrollTo={scrollTo}
-          />
-        </main>
+                <ResultsDashboard
+                  qaoaResult={qaoaResult}
+                  config={config}
+                  onRunAgain={handleRunQAOA}
+                  onScrollTo={scrollTo}
+                />
+              </section>
+            </main>
+        )}
       </div>
 
       <Footer />
@@ -246,3 +325,7 @@ export function App() {
 }
 
 export default App;
+
+
+
+

@@ -1,125 +1,136 @@
-import { useState } from 'react';
-import { Cpu, Play } from 'lucide-react';
+import { Cpu, Play, LineChart } from 'lucide-react';
+import RubberSegment from './RubberSegment';
 
 interface NavbarProps {
+  viewPage: 'optimizer' | 'stocks';
+  onSelectPage: (page: 'optimizer' | 'stocks') => void;
   onRunSimulation: () => void;
   activeSection: string;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ onRunSimulation, activeSection }) => {
-  const [isNavOpen, setIsNavOpen] = useState(false);
-
-  const navItems = [
-    { id: 'hero', label: 'Overview' },
-    { id: 'problem', label: 'Problem' },
-    { id: 'dataset', label: 'Assets' },
-    { id: 'parameters', label: 'Config' },
-    { id: 'qubo', label: 'QUBO' },
-    { id: 'ising', label: 'Ising' },
-    { id: 'qaoa', label: 'QAOA Circuit' },
-    { id: 'convergence', label: 'Convergence' },
-    { id: 'results', label: 'Portfolio' },
-    { id: 'landscape', label: 'Risk-Return' },
-    { id: 'comparison', label: 'Benchmark' },
-    { id: 'experiment', label: 'Lab' },
-    { id: 'methodology', label: 'Methodology' },
-    { id: 'concepts', label: 'Theory' },
-  ];
-
+export const Navbar: React.FC<NavbarProps> = ({ 
+  viewPage, 
+  onSelectPage, 
+  onRunSimulation, 
+  activeSection 
+}) => {
   const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+    if (viewPage !== 'optimizer') {
+      onSelectPage('optimizer');
+      setTimeout(() => {
+        const element = document.getElementById(id);
+        if (element) element.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    } else {
+      const element = document.getElementById(id);
+      if (element) element.scrollIntoView({ behavior: 'smooth' });
     }
-    setIsNavOpen(false);
   };
 
+  const mainPageItems = [
+    { value: 'stocks', label: 'Stock Market (₹)', icon: <LineChart className="w-4 h-4 text-[#ff6b7d]" /> },
+    { value: 'optimizer', label: 'QAOA Optimizer', icon: <Cpu className="w-4 h-4 text-[#ff6b7d]" /> }
+  ];
+
+  const sectionItems = [
+    { value: 'hero', label: 'Overview' },
+    { value: 'assets-config', label: 'Assets & Config' },
+    { value: 'qaoa-solver', label: 'Simulator' },
+    { value: 'results', label: 'Results' }
+  ];
+
   return (
-    <header className="sticky top-0 z-50 bg-[#140307]/90 backdrop-blur-xl border-b border-[#d45266]/30 shadow-lg shadow-[#7c0b2b]/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+    <header className="sticky top-0 z-50 bg-[#140307]/95 backdrop-blur-xl border-b border-[#d45266]/30 shadow-lg shadow-[#7c0b2b]/20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-6">
         
         {/* Brand Header */}
-        <div className="flex items-center gap-3 cursor-pointer" onClick={() => scrollToSection('hero')}>
-          <div className="p-2 rounded-lg bg-[#d45266]/15 border border-[#d45266]/40 text-[#f4eada] shadow-inner">
-            <Cpu className="w-5 h-5 text-[#d45266] animate-pulse" />
+        <div 
+          className="flex items-center gap-3 cursor-pointer group shrink-0" 
+          onClick={() => onSelectPage('optimizer')}
+        >
+          <div className="p-2 rounded-lg bg-[#d45266]/20 border border-[#d45266]/50 text-[#f4eada] shadow-inner group-hover:scale-105 transition-all shrink-0">
+            <Cpu className="w-5 h-5 text-[#ff6b7d] animate-pulse" />
           </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="font-bold text-[#fffdf7] tracking-tight text-base sm:text-lg">
-                QAOA Portfolio Optimizer
-              </span>
-              <span className="badge-academic hidden sm:inline-flex">
-                Academic Capstone
-              </span>
-            </div>
-            <p className="text-xs text-[#cdaea0] font-mono hidden sm:block">
-              QUBO formulation & Quantum Optimization
+          <div className="whitespace-nowrap flex flex-col justify-center">
+            <span className="font-extrabold text-[#fffdf7] tracking-tight text-base sm:text-lg leading-tight block">
+              Quantum FinTech
+            </span>
+            <p className="text-[11px] text-[#cdaea0] font-mono hidden sm:block leading-tight mt-0.5">
+              1 USD = ₹96.13 INR
             </p>
           </div>
         </div>
 
-        {/* Desktop Quick Nav */}
-        <nav className="hidden xl:flex items-center gap-1 text-xs font-medium">
-          {navItems.slice(0, 8).map(item => (
+        {/* React Bits RubberSegment Physics Animated Navigation */}
+        <div className="flex-1 flex items-center justify-center gap-3 min-w-0">
+          <RubberSegment
+            items={mainPageItems}
+            value={viewPage}
+            onChange={(val) => onSelectPage(val as 'optimizer' | 'stocks')}
+            trackColor="#24050e"
+            thumbColor="#d45266"
+            textColor="#f4eada"
+            activeTextColor="#ffffff"
+            size="md"
+            radius={12}
+            inset={3}
+            stretch={100}
+            squash={3}
+            speed={1}
+            glide={75}
+            draggable={true}
+          />
+
+          {viewPage === 'optimizer' && (
+            <div className="hidden lg:block">
+              <RubberSegment
+                items={sectionItems}
+                value={activeSection}
+                onChange={(val) => scrollToSection(val)}
+                trackColor="#1c030b"
+                thumbColor="#7c0b2b"
+                textColor="#cdaea0"
+                activeTextColor="#ffffff"
+                size="sm"
+                radius={10}
+                inset={2}
+                stretch={80}
+                squash={2}
+                speed={1.1}
+                glide={50}
+                draggable={true}
+              />
+            </div>
+          )}
+        </div>
+
+        {/* Action Controls */}
+        <div className="flex items-center gap-2 shrink-0">
+          {viewPage === 'optimizer' && (
             <button
-              key={item.id}
-              onClick={() => scrollToSection(item.id)}
-              className={`px-3 py-1.5 rounded-md transition-all ${
-                activeSection === item.id
-                  ? 'bg-[#d45266]/25 text-[#f4eada] border border-[#d45266]/50 shadow-sm font-semibold'
-                  : 'text-[#cdaea0] hover:text-[#fffdf7] hover:bg-[#24050e]'
-              }`}
+              onClick={onRunSimulation}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d45266] to-[#7c0b2b] hover:from-[#e86070] hover:to-[#961036] text-[#fffdf7] font-bold text-xs shadow-lg shadow-[#d45266]/30 transition-all hover:scale-105 active:scale-95"
             >
-              {item.label}
+              <Play className="w-4 h-4 fill-current text-[#fffdf7]" />
+              <span className="hidden sm:inline">Run QAOA</span>
             </button>
-          ))}
-        </nav>
+          )}
 
-        {/* Action Controls & Mobile Toggle */}
-        <div className="flex items-center gap-3">
-          <div className="hidden sm:flex items-center gap-2 px-3 py-1 rounded-full bg-[#24050e] border border-[#d45266]/30 text-xs font-mono text-[#f4eada]">
-            <span className="w-2 h-2 rounded-full bg-[#d45266] animate-ping" />
-            QAOA Simulator Ready
-          </div>
-
-          <button
-            onClick={onRunSimulation}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-gradient-to-r from-[#d45266] to-[#7c0b2b] hover:from-[#e86070] hover:to-[#961036] text-[#fffdf7] font-bold text-xs sm:text-sm shadow-lg shadow-[#d45266]/30 transition-all hover:scale-105 active:scale-95"
-          >
-            <Play className="w-4 h-4 fill-current text-[#fffdf7]" />
-            <span className="hidden sm:inline">Run QAOA</span>
-            <span className="sm:hidden">Run</span>
-          </button>
-
-          <button
-            onClick={() => setIsNavOpen(!isNavOpen)}
-            className="xl:hidden p-2 rounded-lg bg-[#24050e] text-[#f4eada] border border-[#d45266]/30"
-          >
-            <span className="font-mono text-xs font-bold">{isNavOpen ? '✕' : '☰'}</span>
-          </button>
+          {viewPage === 'stocks' && (
+            <button
+              onClick={() => onSelectPage('optimizer')}
+              className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-[#d45266] to-[#7c0b2b] hover:from-[#e86070] hover:to-[#961036] text-[#fffdf7] font-bold text-xs shadow-lg shadow-[#d45266]/30 transition-all hover:scale-105 active:scale-95"
+            >
+              <Cpu className="w-4 h-4 text-white" />
+              <span className="hidden sm:inline">Quantum Optimizer</span>
+            </button>
+          )}
         </div>
       </div>
-
-      {/* Mobile Nav Drawer */}
-      {isNavOpen && (
-        <div className="xl:hidden bg-[#140307]/95 border-b border-[#d45266]/40 p-4 space-y-2 font-mono text-xs animate-fade-in">
-          <div className="grid grid-cols-2 gap-2">
-            {navItems.map(item => (
-              <button
-                key={item.id}
-                onClick={() => scrollToSection(item.id)}
-                className={`p-2 rounded-md text-left ${
-                  activeSection === item.id
-                    ? 'bg-[#d45266]/25 text-[#f4eada] border border-[#d45266]/50 font-bold'
-                    : 'text-[#cdaea0] hover:bg-[#24050e]'
-                }`}
-              >
-                {item.label}
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
     </header>
   );
 };
+
+
+
+

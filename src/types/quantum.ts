@@ -1,3 +1,10 @@
+export type ApiProvider = 'finnhub' | 'alphavantage' | 'polygon' | 'fmp' | 'coingecko' | 'simulated';
+
+export interface ApiConfig {
+  provider: ApiProvider;
+  apiKey: string;
+}
+
 export interface Asset {
   id: string;
   symbol: string;
@@ -7,7 +14,22 @@ export interface Asset {
   category: string;
   color: string;
   history: number[];      // 12-month normalized price trend for visual cards
+  currentPrice?: number;  // Real-time market price ($ USD)
+  priceInINR?: number;    // Real-time market price (₹ INR)
+  changeUSD?: number;     // Daily price change ($ USD)
+  changeINR?: number;     // Daily price change (₹ INR)
+  changePercent?: number; // Daily price change (%)
+  highPrice?: number;     // Day High ($ USD)
+  lowPrice?: number;      // Day Low ($ USD)
+  openPrice?: number;     // Day Open ($ USD)
+  prevClose?: number;     // Previous Close ($ USD)
+  lastUpdated?: string;   // Real-time timestamp
+  isLive?: boolean;       // Flag indicating live market data feed
+  providerName?: string;  // Name of financial provider used
 }
+
+
+
 
 export interface QUBOMatrix {
   size: number;

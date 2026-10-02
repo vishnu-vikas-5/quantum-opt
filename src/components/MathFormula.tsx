@@ -26,7 +26,7 @@ export const MathFormula: React.FC<MathFormulaProps> = ({
 
   return (
     <span
-      className={`inline-block text-cyan-200 ${className}`}
+      className={`inline-block text-current ${className}`}
       dangerouslySetInnerHTML={{ __html: html }}
     />
   );

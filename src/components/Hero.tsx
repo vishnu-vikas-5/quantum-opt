@@ -1,4 +1,5 @@
 import { Play, BookOpen, Cpu, ShieldCheck, Scale, Binary } from 'lucide-react';
+import TechText from './TechText';
 
 interface HeroProps {
   onRunSimulation: () => void;
@@ -22,15 +23,35 @@ export const Hero: React.FC<HeroProps> = ({ onRunSimulation, onExploreMethodolog
           </div>
         </div>
 
-        {/* Hero Title & Subtitle */}
+        {/* Hero Title & Subtitle with Animated TechText Component */}
         <div className="text-center max-w-4xl mx-auto space-y-4">
-          <h1 className="text-4xl sm:text-6xl font-extrabold text-[#3D0515] tracking-tight leading-tight">
+          
+          {/* React Bits TechText Animated Canvas Wordmark */}
+          <div className="w-full h-36 sm:h-48 relative my-2">
+            <TechText
+              text="Quantum QAOA"
+              fontSize={140}
+              fontWeight={800}
+              color="#3D0515"
+              accentColor="#d45266"
+              reach={200}
+              softness={0.7}
+              specks={20}
+              selection={true}
+              labels={true}
+              draggable={true}
+              sweep={true}
+              speed={1}
+            />
+          </div>
+
+          <h1 className="text-3xl sm:text-5xl font-extrabold text-[#3D0515] tracking-tight leading-tight">
             Maximize Returns.{' '}
             <span className="gradient-dark-text text-glow">Minimize Risk.</span>
           </h1>
           
-          <h2 className="text-xl sm:text-2xl font-bold text-[#7C0B2B] font-mono tracking-wide">
-            Portfolio Optimization Using QAOA
+          <h2 className="text-lg sm:text-xl font-bold text-[#7C0B2B] font-mono tracking-wide">
+            Portfolio Optimization Using Quantum Approximate Optimization Algorithm
           </h2>
 
           <p className="text-base sm:text-lg text-[#5C0820] max-w-3xl mx-auto leading-relaxed pt-2">
