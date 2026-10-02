@@ -22,7 +22,7 @@ import { ResultsDashboard } from './components/ResultsDashboard';
 import { Footer } from './components/Footer';
 
 export function App() {
-  const [viewPage, setViewPage] = useState<'optimizer' | 'stocks'>('stocks');
+  const [viewPage, setViewPage] = useState<'optimizer' | 'stocks'>('optimizer');
   const [allAssets, setAllAssets] = useState<Asset[]>(LIVE_MARKET_ASSETS);
   const [selectedAssetIds, setSelectedAssetIds] = useState<string[]>(LIVE_MARKET_ASSETS.map(a => a.id));
   const [targetK, setTargetK] = useState<number>(4);
