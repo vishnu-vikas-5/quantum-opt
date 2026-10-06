@@ -1,0 +1,190 @@
+@import "tailwindcss";
+@import "katex/dist/katex.min.css";
+
+/* High Contrast Almond Cream & Deep Burgundy Theme */
+:root {
+  --bg-main: #f5ebe0;          /* Almond Cream Background */
+  --bg-surface: #4a0619;       /* Deep Burgundy Surface */
+  --bg-card: #5c0820;          /* Rich Burgundy Cards */
+  --bg-card-hover: #700a27;
+  
+  --border-subtle: rgba(212, 82, 102, 0.4);
+  --border-glow: #ff6b7d;
+  --border-active: #ff6b7d;
+
+  --accent-rose: #ff6b7d;      /* High Contrast Vibrant Coral Rose */
+  --accent-burgundy: #7c0b2b;  /* Deep Burgundy */
+  --accent-cream: #f5ebe0;     /* Almond Cream */
+  --accent-pearl: #ffffff;     /* Pure White */
+
+  --text-dark: #3d0515;        /* Deepest Wine text on Almond Cream */
+  --text-dark-muted: #6e0a27;  /* Dark Wine text for paragraphs on Almond Cream */
+
+  --text-card-main: #ffffff;   /* Pure White for headings inside cards */
+  --text-card-muted: #f5ebe0;  /* Cream for labels inside cards */
+  --text-card-subtle: #e6d0c0; /* Warm Light Taupe for muted text inside cards */
+
+  --font-sans: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', ui-monospace, monospace;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-dark);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #f5ebe0;
+  background-image: radial-gradient(circle at 50% 0%, rgba(212, 82, 102, 0.15) 0%, transparent 60%),
+                    radial-gradient(circle at 100% 50%, rgba(124, 11, 43, 0.12) 0%, transparent 50%);
+  background-attachment: fixed;
+  overflow-x: hidden;
+  color: #3d0515;
+}
+
+/* Custom Crimson Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #f5ebe0;
+}
+::-webkit-scrollbar-thumb {
+  background: #7c0b2b;
+  border-radius: 4px;
+  border: 1px solid rgba(245, 235, 224, 0.4);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6b7d;
+}
+
+/* High Contrast Glassmorphism Card Utility */
+.glass-card {
+  background: #5c0820;
+  border: 1.5px solid rgba(212, 82, 102, 0.45);
+  border-radius: 14px;
+  color: #ffffff;
+  transition: all 0.25s ease-in-out;
+  box-shadow: 0 10px 30px 0 rgba(74, 6, 25, 0.35);
+}
+
+.glass-card:hover {
+  border-color: #ff6b7d;
+  box-shadow: 0 14px 40px 0 rgba(212, 82, 102, 0.35);
+}
+
+.glass-card-interactive {
+  cursor: pointer;
+}
+.glass-card-interactive:hover {
+  transform: translateY(-2px);
+}
+
+/* Glowing text */
+.text-glow {
+  text-shadow: 0 0 20px rgba(255, 107, 125, 0.6);
+}
+
+.gradient-text {
+  background: linear-gradient(135deg, #ffffff 0%, #f5ebe0 40%, #ff6b7d 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.gradient-dark-text {
+  background: linear-gradient(135deg, #3d0515 0%, #7c0b2b 60%, #d45266 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Pulsing Quantum Particle Glow */
+@keyframes particlePulse {
+  0%, 100% { transform: scale(1); opacity: 0.7; }
+  50% { transform: scale(1.3); opacity: 1; filter: drop-shadow(0 0 12px #ff6b7d); }
+}
+
+.animate-particle {
+  animation: particlePulse 3s infinite ease-in-out;
+}
+
+/* Code & Math typography */
+.font-mono {
+  font-family: var(--font-mono);
+}
+
+/* Heatmap Grid Cell */
+.heatmap-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  border-radius: 4px;
+  transition: transform 0.15s ease, filter 0.15s ease;
+}
+.heatmap-cell:hover {
+  transform: scale(1.08);
+  z-index: 10;
+  filter: brightness(1.3);
+  box-shadow: 0 0 14px rgba(255, 107, 125, 0.7);
+}
+
+/* Circuit Gate Visuals */
+.quantum-gate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 0.85rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+.gate-h { background: rgba(245, 235, 224, 0.25); color: #ffffff; border-color: #f5ebe0; }
+.gate-rz { background: rgba(212, 82, 102, 0.4); color: #ffffff; border-color: #ff6b7d; }
+.gate-rzz { background: rgba(180, 40, 75, 0.6); color: #ffffff; border-color: #ff8b9a; }
+.gate-rx { background: rgba(124, 11, 43, 0.8); color: #ffffff; border-color: #e85568; }
+.gate-cnot { background: rgba(255, 255, 255, 0.3); color: #ffffff; border-color: #ffffff; }
+
+/* Custom Badge */
+.badge-quantum {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  background: #5c0820;
+  color: #ffffff;
+  border: 1px solid #ff6b7d;
+  box-shadow: 0 2px 8px rgba(92, 8, 32, 0.3);
+}
+
+.badge-academic {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  background: rgba(245, 235, 224, 0.25);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
